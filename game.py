@@ -33,4 +33,3 @@ if ":" in coord:
     if comprobarCoordenada(c1) and comprobarCoordenada(c2):
         mover(c1, c2, tablero)
         mostrarTablero(tablero)
-
