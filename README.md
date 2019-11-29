@@ -10,6 +10,6 @@ Se puede instalar colorama con [pip](https://pip.pypa.io/en/stable/installing/#d
 pip install colorama
 ```
 ## Creadores
-<sub>Serafí Nebot Ginard</sub> y compañia.</br>
+Serafí Nebot Ginard <sub>y compañia.</sub></br>
 **PD:** Algo si que hicieron. No esta mal por su nivel intelectual.</br>
 **PD 2:** RAFAAA! Es coña, por lo menos saben hacer ifs.
