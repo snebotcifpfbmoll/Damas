@@ -1,0 +1,25 @@
+def normas():
+    print("=====================================================================================================================================================================================")
+    print("Las damas se juegan entre dos personas en un tablero de ajedrez.Cada jugador dispone de 12 piezas de un mismo  color (blancas i  negras).")
+    print("Se juega por turnos alternos. Empieza a jugar el que juega con las blancas. En su  turno cada jugador mueve una pieza própia. Las piezas se mueven una posición adelante en diagonal.")
+    print("Cuando se come,las piezas saltan por encima de una pieza contraria en diagonal i van a parar a la casilla siguiente,que es obligatoria que este vacia.")
+    print("Las capturas se pueden encadenar,eso pasa si al comer una pieza y colocarte en la posición pertinente puedes volver a comer.")
+    print("Al llegar al otro extremo del tablero con una ficha,esta se convierte en DAMA,las damas pueden mover hacia adelante y hacia  atrás hacia las  cuatro direcciones en diagonal, una o varias casillas.")
+    print("=====================================================================================================================================================================================")
+    input("PULSA CUALQUIER TECLA PARA VOLVER AL MENÚ")
+salir=False
+while salir==False:
+    print("=========================")
+    print("=        M E N Ú        =")
+    print("=========================")
+    print("1) NORMAS")
+    print("2) EMPEZAR PARTIDA")
+    print("3) Salir")
+    print("=========================")
+    numero=int(input("Que opción deseas?"))       
+    if numero==1:
+        normas()
+    elif numero==2:
+        print("aqui anira es joc")
+    elif numero==3:
+        salir=True
