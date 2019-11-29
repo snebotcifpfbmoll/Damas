@@ -1,10 +1,16 @@
 def comprobarFicha(coord):
-    if valorCoordenada=3
-        
-    elif valorCoordenada=2
-    
-    elif valorCoordenada=0 or valorCoordenada=1
+    if valorCoordenada=3:
+        # la ficha sera negra(solo se puede mover para abajo)
+        if org_1,org_2 < dst_1,dst_2:
+            mover(origen,destino,tablero)
+    elif valorCoordenada=2:
+        # la ficha sera blanca(solo se puede mover para arriba)
+        if org_1,org_2 > dst_1,dst_2:
+            mover(origen,destino,tablero)
+    elif valorCoordenada=0 or valorCoordenada=1:
         print("No hay ninguna ficha que seleccionar.")
+    else:
+        mover(origen,destino,tablero)
 
 def moverFicha(coord):
     # Comprobar el formato de la coordenada
@@ -23,4 +29,10 @@ def comprobarFichaDestino(coord):
     if /destino/=0:
         print("Las fichas no pueden realizar este movimiento,prueba otra vez.")
     else 
-    mover
+        moverFicha(coord)
+def finJuego():
+    # definimos variables para contar las fichas (fichasNegras=12/fichasBlancas=12)
+    if fichasNegras=0
+        print("LAS FICHAS BLANCAS GANAN LA PARTIDA!!!")
+    elif fichasBlancas=0
+        print("LAS FICHAS NEGRAS GANAN LA PARTIDA!!!!")
