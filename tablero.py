@@ -49,6 +49,18 @@ def cambiarColor(string, color):
         return ("%s%s%s" % (colors[color], string, colors["reset"]))
     return string
 
+def imprimirColor(ficha):
+    if ficha == E_NEGRO:
+        print(cambiarColor(" ██ ", "fg-black"), end="")
+    elif ficha == E_BLANCO:
+        print(cambiarColor(" ██ ", "fg-white"), end="")
+    elif ficha == D_NEGRA:
+        print(cambiarColor(" ██ ", "fg-red"), end="")
+    elif ficha == D_BLANCA:
+        print(cambiarColor(" ██ ", "fg-cyan"), end="")
+    else:
+        print(ficha, end="")
+
 def mostrarTablero(tablero):
     # Imprimir las coordenadas de arriba
     print("   ", end="") # Alinear numeros
@@ -65,15 +77,13 @@ def mostrarTablero(tablero):
                 print("%s: " % (letras[indice_1]), end="")
             # Comprobar si la plataforma es darwin (Mac) o linux. Si es Windows o otro lo imprimimos de forma normal.
             if sys.platform == "darwin" or sys.platform == "linux" or sys.platform == "linux2":
-                if j == E_NEGRO:
-                    print(cambiarColor(" ██ ", "fg-black"), end="")
-                elif j == E_BLANCO:
-                    print(cambiarColor(" ██ ", "fg-white"), end="")
-                elif j == D_NEGRA:
-                    print(cambiarColor(" ██ ", "fg-red"), end="")
-                elif j == D_BLANCA:
-                    print(cambiarColor(" ██ ", "fg-cyan"), end="")
-                else:
+                imprimirColor(j)
+            elif sys.platform == "win32":
+                try:
+                    import colorama
+                    colorama.init()
+                    imprimirColor(j)
+                except:
                     print(j, end="")
             else:
                 print(j, end="")
