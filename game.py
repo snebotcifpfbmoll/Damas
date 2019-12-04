@@ -6,6 +6,7 @@ from sys import platform
 from tablero import mostrarTablero
 from coordenadas import *
 from movimientos import *
+from colores import cambiarColor
 
 # Constantes del programa
 MENU_WIDTH = 25
@@ -58,19 +59,53 @@ while opcion != 3:
         normas()
     elif opcion == 2:
         # partida
+        contador_turnos = 1
         while True:
             clear()
+            turno = ""
+            color = ""
+            if contador_turnos % 2 == 0:
+                turno = "Rojas"
+                color = "bg-red"
+            else:
+                turno = "Azules"
+                color = "bg-cyan"
+            print(cambiarColor(cambiarColor("TURNO: %s" % (turno), color), "bg-red"))
             mostrarTablero(tablero)
             print("\nIntroduce la coordenada de la ficha que quieres mover y la de destino. (<Origen>:<Destino>)")
             coord = input("> ")
             if ":" in coord:
                 origen, destino = separarCoordenada(coord)
                 if comprobarCoordenada(origen) and comprobarCoordenada(destino):
-                    print(comprobarMovimiento(origen, destino, tablero))
+                    # Comprobar turnos
+                    if (contador_turnos % 2 == 0 and valorCoordenada(origen, tablero) == D_NEGRA) or (contador_turnos % 2 != 0 and valorCoordenada(origen, tablero) == D_BLANCA):
+                        # Comprobar movimiento
+                        movimiento_correcto, matanza = comprobarMovimiento(origen, destino, tablero)
+                        if movimiento_correcto:
+                            mover(origen, destino, tablero)
+                            if matanza:
+                                print("Sa matao paco!", end="")
+                                input()
+                            else:
+                                contador_turnos += 1
+                        else:
+                            print("No se puede mover la ficha al lugar indicado.", end="")
+                            input()
+                    elif valorCoordenada(origen, tablero) == E_BLANCO or valorCoordenada(origen, tablero) == E_NEGRO:
+                        print("No hay ninguna ficha en esa coordenada.", end="")
+                        input()
+                    else:
+                        print("No es su turno. Payaso.", end="")
+                        input()
+                else:
+                    print("Las coordenadas indicadas no son correctas.", end="")
                     input()
+            else:
+                print("Las coordenadas indicadas no son correctas.", end="")
+                input()
     elif opcion == 3:
         # El bucle va a terminar
         print("", end="")
     else:
-        print("[Error] La opcion %d no es válida." % (opcion), end="")
+        print("La opcion %d no es válida." % (opcion), end="")
         input()
