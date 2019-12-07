@@ -1,3 +1,8 @@
+import sys
+
+# Variable para comprobar que Windows es compatible con ANSI colors
+windows_colors = False
+
 # Tipos de colores para el output
 colors = {
         "reset": "\033[0m",
@@ -37,7 +42,15 @@ colors = {
 
 # Solo funciona con Mac (Windows es una mierda)
 def cambiarColor(string, color):
-    # Comprobar que el color existe
-    if color in colors:
-        return ("%s%s%s" % (colors[color], string, colors["reset"]))
+    if sys.platform == "win32" and windows_colors == False:
+        try:
+            import colorama
+            colorama.init()
+            windows_colors == True
+        except:
+            windows_colors = False
+    if sys.platform == "darwin" or sys.platform == "linux" or sys.platform == "linux2" or windows_colors:
+        # Comprobar que el color existe
+        if color in colors:
+            return ("%s%s%s" % (colors[color], string, colors["reset"]))
     return string

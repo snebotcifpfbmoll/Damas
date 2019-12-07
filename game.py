@@ -3,7 +3,7 @@
 # Importar dependencias
 import os
 from sys import platform
-from tablero import mostrarTablero
+from tablero import mostrarTablero, comprobarFinalTablero
 from coordenadas import *
 from movimientos import *
 from colores import cambiarColor
@@ -51,17 +51,59 @@ def menu():
     opcion = int(input("> "))
     return opcion
 
+def comprobarMovimientoJugador(coord, turno, contador):
+    if ":" in coord:
+        origen, destino = separarCoordenada(coord)
+        if comprobarCoordenada(origen) and comprobarCoordenada(destino):
+            # Comprobar turnos
+            if (contador % 2 == 0 and (valorCoordenada(origen, tablero) == D_NEGRA or valorCoordenada(origen, tablero) == D_REINA_NEGRA) or (contador % 2 != 0 and (valorCoordenada(origen, tablero) == D_BLANCA or valorCoordenada(origen, tablero) == D_REINA_BLANCA))):
+                # Comprobar movimiento
+                movimiento_correcto, matanza = comprobarMovimiento(origen, destino, tablero)
+                if movimiento_correcto:
+                    ficha = valorCoordenada(origen, tablero)
+                    mover(origen, destino, tablero)
+                    if matanza == False:
+                        contador += 1
+                    # Comprobar reina
+                    if ficha != D_REINA_BLANCA and ficha != D_REINA_NEGRA:
+                        dst_f, dst_c = indiceCoordenada(destino)
+                        if comprobarFinalTablero(dst_f):
+                            if ficha == D_BLANCA:
+                                cambiarFicha(dst_f, dst_c, D_REINA_BLANCA, tablero)
+                            elif ficha == D_NEGRA:
+                                cambiarFicha(dst_f, dst_c, D_REINA_NEGRA, tablero)
+                else:
+                    print("No se puede mover la ficha al lugar indicado.", end="")
+                    input()
+            elif valorCoordenada(origen, tablero) == E_BLANCO or valorCoordenada(origen, tablero) == E_NEGRO:
+                print("No hay ninguna ficha en esa coordenada.", end="")
+                input()
+            else:
+                print("No es su turno. Payaso.", end="")
+                input()
+        else:
+            print("Las coordenadas indicadas no son correctas.", end="")
+            input()
+    else:
+        print("Las coordenadas indicadas no son correctas.", end="")
+        input()
+    return contador
+
 # Programa principal
 opcion = 0
 while opcion != 3:
     opcion = menu()
     if opcion == 1:
+        # Mostrar las normas
         normas()
     elif opcion == 2:
-        # partida
+        # Empezar la partida
+        # Contador de turnos:
+        # Cada vez que un movimiento sea valida el contador va a subir +1
+        # Si el contador es un numero par va a ser el turno de las negras, si es impar va a ser el turno de las blancas
         contador_turnos = 1
         while True:
-            clear()
+            clear() # Limpiar la pantalla
             turno = ""
             color = ""
             if contador_turnos % 2 == 0:
@@ -70,41 +112,29 @@ while opcion != 3:
             else:
                 turno = "Azules"
                 color = "bg-cyan"
-            print(cambiarColor(cambiarColor("TURNO: %s" % (turno), color), "bg-red"))
+            print(cambiarColor(cambiarColor("TURNO: %s" % (turno), color), "bg-red")) # Colores!
             mostrarTablero(tablero)
+            # Pedir un movimiento
             print("\nIntroduce la coordenada de la ficha que quieres mover y la de destino. (<Origen>:<Destino>)")
             coord = input("> ")
-            if ":" in coord:
-                origen, destino = separarCoordenada(coord)
-                if comprobarCoordenada(origen) and comprobarCoordenada(destino):
-                    # Comprobar turnos
-                    if (contador_turnos % 2 == 0 and valorCoordenada(origen, tablero) == D_NEGRA) or (contador_turnos % 2 != 0 and valorCoordenada(origen, tablero) == D_BLANCA):
-                        # Comprobar movimiento
-                        movimiento_correcto, matanza = comprobarMovimiento(origen, destino, tablero)
-                        if movimiento_correcto:
-                            mover(origen, destino, tablero)
-                            if matanza:
-                                print("Sa matao paco!", end="")
-                                input()
-                            else:
-                                contador_turnos += 1
-                        else:
-                            print("No se puede mover la ficha al lugar indicado.", end="")
-                            input()
-                    elif valorCoordenada(origen, tablero) == E_BLANCO or valorCoordenada(origen, tablero) == E_NEGRO:
-                        print("No hay ninguna ficha en esa coordenada.", end="")
-                        input()
-                    else:
-                        print("No es su turno. Payaso.", end="")
-                        input()
-                else:
-                    print("Las coordenadas indicadas no son correctas.", end="")
-                    input()
-            else:
-                print("Las coordenadas indicadas no son correctas.", end="")
-                input()
+            
+            # Chetos
+            if coord == "/mododios":
+                op = ""
+                while op != "q":
+                    clear()
+                    mostrarTablero(tablero)
+                    op = input("# ").lower()
+                    if ":" in op:
+                        org, dst = separarCoordenada(op)
+                        if comprobarCoordenada(org) and comprobarCoordenada(dst):
+                            mover(org, dst, tablero)
+                continue;
+
+            # Comprobar que el movimiento
+            contador_turnos = comprobarMovimientoJugador(coord, turno, contador_turnos)
     elif opcion == 3:
-        # El bucle va a terminar
+        # El bucle va a terminar (no hacer nada)
         print("", end="")
     else:
         print("La opcion %d no es válida." % (opcion), end="")

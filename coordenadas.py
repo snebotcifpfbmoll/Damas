@@ -8,11 +8,15 @@ def separarCoordenada(coord):
     # .upper() para convertirlas en mayusculas
     return (coord.split(":")[0].upper(), coord.split(":")[1].upper())
 
+def crearCoordenada(fila, col):
+    return "%s%d" % (letras[fila], col)
+
+def comprobarIndiceCoordenada(fila, col):
+    return fila < len(letras) and col in range(0, 8)
+
 def comprobarCoordenada(coord):
     # Si la coordenada esta dentro de letras (coordenadas de la izquierda del tablero) y si la coordenada esta en el rango [0..7] (las coordenadas de arriba del tablero) sera correcta
-    if (coord[0] in letras) and (int(coord[1:]) in range(0, 8)):
-        return True
-    return False
+    return (coord[0] in letras) and (int(coord[1:]) in range(0, 8))
 
 def indiceCoordenada(coord):
     return (letras.index(coord[0]), int(coord[1]))

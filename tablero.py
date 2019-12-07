@@ -15,8 +15,18 @@ def imprimirColor(ficha):
         print(cambiarColor(" ██ ", "fg-red"), end="")
     elif ficha == D_BLANCA:
         print(cambiarColor(" ██ ", "fg-cyan"), end="")
+    elif ficha == D_REINA_BLANCA:
+        print(cambiarColor(cambiarColor(" ██ ", "fg-cyan"), "bg-bright-cyan"), end="")
+    elif ficha == D_REINA_NEGRA:
+        print(cambiarColor(cambiarColor(" ██ ", "fg-red"), "bg-bright-red"), end="")
     else:
         print(ficha, end="")
+
+def cambiarFicha(fila, columna, ficha, tablero):
+    tablero[fila][columna] = ficha
+
+def comprobarFinalTablero(indice):
+    return indice == 0 or indice == len(letras) - 1
 
 def mostrarTablero(tablero):
     # Imprimir las coordenadas de arriba
@@ -32,18 +42,7 @@ def mostrarTablero(tablero):
             # Imprimir coordenadas laterales
             if indice_2 == 0:
                 print("%s: " % (letras[indice_1]), end="")
-            # Comprobar si la plataforma es darwin (Mac) o linux. Si es Windows o otro lo imprimimos de forma normal.
-            if sys.platform == "darwin" or sys.platform == "linux" or sys.platform == "linux2":
-                imprimirColor(j)
-            elif sys.platform == "win32":
-                try:
-                    import colorama
-                    colorama.init()
-                    imprimirColor(j)
-                except:
-                    print(j, end="")
-            else:
-                print(j, end="")
+            imprimirColor(j)
             indice_2 += 1
         print("\n")
         indice_1 += 1
