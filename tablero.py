@@ -28,6 +28,13 @@ def cambiarFicha(fila, columna, ficha, tablero):
 def comprobarFinalTablero(indice):
     return indice == 0 or indice == len(letras) - 1
 
+def comprobarFinalPartida(comprobarFicha, tablero):
+    for i in tablero:
+        for j in i:
+            if j == comprobarFicha:
+                return False
+    return True
+
 def mostrarTablero(tablero):
     # Imprimir las coordenadas de arriba
     print("   ", end="") # Alinear numeros

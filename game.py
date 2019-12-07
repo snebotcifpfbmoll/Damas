@@ -3,7 +3,7 @@
 # Importar dependencias
 import os
 from sys import platform
-from tablero import mostrarTablero, comprobarFinalTablero
+from tablero import *
 from coordenadas import *
 from movimientos import *
 from colores import cambiarColor
@@ -12,16 +12,8 @@ from util import obtenerDimensiones
 # Constantes del programa
 MENU_WIDTH = 25
 
-# Tablero inicial (posicion de las damas)
-tablero = [
-        [0, 2, 0, 2, 0, 2, 0, 2],
-        [2, 0, 2, 0, 2, 0, 2, 0],
-        [0, 2, 0, 2, 0, 2, 0, 2],
-        [1, 0, 1, 0, 1, 0, 1, 0],
-        [0, 1, 0, 1, 0, 1, 0, 1],
-        [3, 0, 3, 0, 3, 0, 3, 0],
-        [0, 3, 0, 3, 0, 3, 0, 3],
-        [3, 0, 3, 0, 3, 0, 3, 0]]
+# Tablero
+tablero = []
 
 def clear():
     if platform == "win32":
@@ -103,45 +95,83 @@ opcion = 0
 while opcion != 3:
     opcion = menu()
     if opcion == 1:
-        # Mostrar las normas
         normas()
     elif opcion == 2:
-        # Empezar la partida
+        # Tablero inical:
+        tablero = [
+                [0, 2, 0, 2, 0, 2, 0, 2],
+                [2, 0, 2, 0, 2, 0, 2, 0],
+                [0, 2, 0, 2, 0, 2, 0, 2],
+                [1, 0, 1, 0, 1, 0, 1, 0],
+                [0, 1, 0, 1, 0, 1, 0, 1],
+                [3, 0, 3, 0, 3, 0, 3, 0],
+                [0, 3, 0, 3, 0, 3, 0, 3],
+                [3, 0, 3, 0, 3, 0, 3, 0]]
         # Contador de turnos:
         # Cada vez que un movimiento sea valida el contador va a subir +1
         # Si el contador es un numero par va a ser el turno de las negras, si es impar va a ser el turno de las blancas
         contador_turnos = 1
-        while True:
-            clear() # Limpiar la pantalla
-            turno = ""
-            color = ""
-            if contador_turnos % 2 == 0:
-                turno = "Rojas"
-                color = "bg-red"
+        ganador = ""
+        while ganador == "":
+            # Comprobar final partida
+            if comprobarFinalPartida(D_BLANCA, tablero):
+                ganador = "NEGRAS"
+                print("Las negras han ganado")
+                input()
+            elif comprobarFinalPartida(D_BLANCA, tablero):
+                ganador = "BLANCAS"
+                print("Las blancas han ganado")
+                input()
             else:
-                turno = "Azules"
-                color = "bg-cyan"
-            print(cambiarColor(cambiarColor("TURNO: %s" % (turno), color), "bg-red")) # Colores!
-            mostrarTablero(tablero)
-            # Pedir un movimiento
-            print("\nIntroduce la coordenada de la ficha que quieres mover y la de destino. (<Origen>:<Destino>)")
-            coord = input("> ")
-            
-            # Chetos
-            if coord == "/mododios":
-                op = ""
-                while op != "q":
-                    clear()
-                    mostrarTablero(tablero)
-                    op = input("# ").lower()
-                    if ":" in op:
-                        org, dst = separarCoordenada(op)
-                        if comprobarCoordenada(org) and comprobarCoordenada(dst):
-                            mover(org, dst, tablero)
-                continue;
-
-            # Comprobar que el movimiento
-            contador_turnos = comprobarMovimientoJugador(coord, turno, contador_turnos)
+                clear() # Limpiar la pantalla
+                turno = ""
+                color = ""
+                if contador_turnos % 2 == 0:
+                    turno = "Rojas"
+                    color = "bg-red"
+                else:
+                    turno = "Azules"
+                    color = "bg-cyan"
+                print(cambiarColor(cambiarColor("TURNO: %s" % (turno), color), "bg-red")) # Colores!
+                mostrarTablero(tablero)
+                # Pedir un movimiento
+                print("\nIntroduce la coordenada de la ficha que quieres mover y la de destino. (<Origen>:<Destino>)")
+                coord = input("> ")
+                if coord != "":
+                    # Modo "dios" usado durante el desarrollo
+                    if coord == "/mododios":
+                        op = ""
+                        while op != "q":
+                            clear()
+                            mostrarTablero(tablero)
+                            op = input("# ").lower()
+                            if op != "":
+                                if ":" in op:
+                                    org, dst = separarCoordenada(op)
+                                    if comprobarCoordenada(org) and comprobarCoordenada(dst):
+                                        mover(org, dst, tablero)
+                                elif op[0] == "/":
+                                    cmd = op[1:].split(" ")
+                                    if len(cmd) > 1:
+                                        if cmd[0] == "reina":
+                                            tmp_coord = cmd[1].upper()
+                                            if comprobarCoordenada(tmp_coord):
+                                                ficha = valorCoordenada(tmp_coord, tablero)
+                                                if ficha == D_NEGRA or ficha == D_BLANCA:
+                                                    fila, col = indiceCoordenada(tmp_coord)
+                                                    cambiarFicha(fila, col, ficha + 2, tablero)
+                                        elif cmd[0] == "kill":
+                                            coords = cmd[1].split(",")
+                                            for tmp_coord in coords:
+                                                tmp_coord = tmp_coord.upper()
+                                                if comprobarCoordenada(tmp_coord):
+                                                    ficha = valorCoordenada(tmp_coord, tablero)
+                                                    if ficha == D_NEGRA or ficha == D_BLANCA:
+                                                        fila, col = indiceCoordenada(tmp_coord)
+                                                        cambiarFicha(fila, col, E_NEGRO, tablero)
+                    else:
+                        # Comprobar que el movimiento
+                        contador_turnos = comprobarMovimientoJugador(coord, turno, contador_turnos)
     elif opcion == 3:
         # El bucle va a terminar (no hacer nada)
         print("", end="")
