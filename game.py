@@ -115,13 +115,9 @@ while opcion != 3:
         while ganador == "":
             # Comprobar final partida
             if comprobarFinalPartida(D_BLANCA, tablero):
-                ganador = "NEGRAS"
-                print("Las negras han ganado")
-                input()
-            elif comprobarFinalPartida(D_BLANCA, tablero):
-                ganador = "BLANCAS"
-                print("Las blancas han ganado")
-                input()
+                ganador = cambiarColor(cambiarColor("ROJAS", "fg-white"), "bg-red")
+            elif comprobarFinalPartida(D_NEGRA, tablero):
+                ganador = cambiarColor(cambiarColor("AZULES", "fg-white"), "bg-cyan")
             else:
                 clear() # Limpiar la pantalla
                 turno = ""
@@ -172,6 +168,8 @@ while opcion != 3:
                     else:
                         # Comprobar que el movimiento
                         contador_turnos = comprobarMovimientoJugador(coord, turno, contador_turnos)
+        print("Las fichas %s han ganado!" % (ganador), end="")
+        input()
     elif opcion == 3:
         # El bucle va a terminar (no hacer nada)
         print("", end="")
