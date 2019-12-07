@@ -7,6 +7,7 @@ from tablero import mostrarTablero, comprobarFinalTablero
 from coordenadas import *
 from movimientos import *
 from colores import cambiarColor
+from util import obtenerDimensiones
 
 # Constantes del programa
 MENU_WIDTH = 25
@@ -31,23 +32,28 @@ def clear():
 # Mostrar las noramas del juego
 def normas():
     clear()
-    print("%s" % ("=" * MENU_WIDTH))
-    print("Las damas se juegan entre dos personas en un tablero de ajedrez.Cada jugador dispone de 12 piezas de un mismo  color (blancas i  negras).")
-    print("Se juega por turnos alternos. Empieza a jugar el que juega con las blancas. En su  turno cada jugador mueve una pieza própia. Las piezas se mueven una posición adelante en diagonal.")
-    print("Cuando se come,las piezas saltan por encima de una pieza contraria en diagonal i van a parar a la casilla siguiente,que es obligatoria que este vacia.")
-    print("Las capturas se pueden encadenar,eso pasa si al comer una pieza y colocarte en la posición pertinente puedes volver a comer.")
-    print("Al llegar al otro extremo del tablero con una ficha,esta se convierte en DAMA,las damas pueden mover hacia adelante y hacia  atrás hacia las  cuatro direcciones en diagonal, una o varias casillas.")
-    print("%s" % ("=" * MENU_WIDTH))
+    menu_border = cambiarColor("█", "fg-red")
+    print("%s\n" % (menu_border * MENU_WIDTH))
+    print("- Las damas se juegan entre dos personas en un tablero de ajedrez.Cada jugador dispone de 12 piezas de un mismo  color (blancas i negras).")
+    print("- Se juega por turnos alternos. Empieza a jugar el que juega con las blancas. En su  turno cada jugador mueve una pieza própia. Las piezas se mueven una posición adelante en diagonal.")
+    print("- Cuando se come,las piezas saltan por encima de una pieza contraria en diagonal i van a parar a la casilla siguiente,que es obligatoria que este vacia.")
+    print("- Las capturas se pueden encadenar,eso pasa si al comer una pieza y colocarte en la posición pertinente puedes volver a comer.")
+    print("- Al llegar al otro extremo del tablero con una ficha,esta se convierte en DAMA,las damas pueden mover hacia adelante y hacia  atrás hacia las  cuatro direcciones en diagonal, una o varias casillas.")
+    print("\n%s\n" % (menu_border * MENU_WIDTH))
     input("PULSA CUALQUIER TECLA PARA VOLVER AL MENÚ")
 
 def menu():
     clear()
-    print("%s" % ("=" * MENU_WIDTH))
-    print("=%s=" % ("MENÚ".center(MENU_WIDTH - 2)))
-    print("%s" % ("=" * MENU_WIDTH))
-    print("\t1) Normas")
-    print("\t2) Empezar partida")
-    print("\t3) Salir")
+    menu_border = cambiarColor("█", "fg-blue")
+    print("%s" % (menu_border * MENU_WIDTH))
+    print("%s%s%s" % (menu_border * 2, " " * (MENU_WIDTH - 4), menu_border * 2))
+    print("%s%s%s" % (menu_border * 2, cambiarColor("MENÚ".center(MENU_WIDTH - 4), "fg-yellow"), menu_border * 2))
+    print("%s%s%s" % (menu_border * 2, " " * (MENU_WIDTH - 4), menu_border * 2))
+    print("%s" % (menu_border * MENU_WIDTH))
+    print("")
+    print("\t%s" % (cambiarColor(cambiarColor("1) Normas", "fg-white"), "bg-red")))
+    print("\t%s" % (cambiarColor(cambiarColor("2) Empezar Partida", "fg-white"), "bg-blue")))
+    print("\t%s" % (cambiarColor(cambiarColor("3) Salir", "fg-white"), "bg-bright-black")))
     opcion = int(input("> "))
     return opcion
 
@@ -90,6 +96,9 @@ def comprobarMovimientoJugador(coord, turno, contador):
     return contador
 
 # Programa principal
+width, height = obtenerDimensiones()
+if width != 0:
+    MENU_WIDTH = width
 opcion = 0
 while opcion != 3:
     opcion = menu()
