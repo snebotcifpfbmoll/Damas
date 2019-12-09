@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from util import *
-from colores import cambiarColor,comprobarColorama
+from colores import cambiarColor
 
 # Lista para las coordenadas
 letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
