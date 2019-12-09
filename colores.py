@@ -37,16 +37,8 @@ colors = {
         "bg-bright-white": "\033[107m"
         }
 
-def comprobarColorama():
-    try:
-        import colorama
-        return True
-    except:
-        return False
-
 def cambiarColor(string, color):
-    if sys.platform == "darwin" or sys.platform == "linux" or sys.platform == "linux2" or sys.platform == "win32":
-        # Comprobar que el color existe
-        if color in colors:
-            return ("%s%s%s" % (colors[color], string, colors["reset"]))
+    # Comprobar que el color existe
+    if color in colors:
+        return ("%s%s%s" % (colors[color], string, colors["reset"]))
     return string

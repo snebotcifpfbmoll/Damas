@@ -8,7 +8,7 @@ D_BLANCA = 3
 D_REINA_NEGRA = 4
 D_REINA_BLANCA = 5
 
-# Obtener las dimensiones de la consola
+# Obtener las dimensiones de la consola (windows no funciona)
 def obtenerDimensiones():
     try:
         import fcntl, termios, struct

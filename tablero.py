@@ -49,10 +49,7 @@ def mostrarTablero(tablero):
             # Imprimir coordenadas laterales
             if indice_2 == 0:
                 print("%s: " % (letras[indice_1]), end="")
-            if sys.platform == "win32" and comprobarColorama() == False:
-                print(j, end="")
-            else:
-                imprimirColor(j)
+            imprimirColor(j)
             indice_2 += 1
         print("\n")
         indice_1 += 1
