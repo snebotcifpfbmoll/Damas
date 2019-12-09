@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from util import *
-from colores import cambiarColor
+from colores import cambiarColor,comprobarColorama
 
 # Lista para las coordenadas
 letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
@@ -49,7 +49,10 @@ def mostrarTablero(tablero):
             # Imprimir coordenadas laterales
             if indice_2 == 0:
                 print("%s: " % (letras[indice_1]), end="")
-            imprimirColor(j)
+            if sys.platform == "win32" and comprobarColorama() == False:
+                print(j, end="")
+            else:
+                imprimirColor(j)
             indice_2 += 1
         print("\n")
         indice_1 += 1
