@@ -2,14 +2,16 @@
 El mejor juego de damas del puto UNIVERSO.
 ## Uso
 * Leerse las normas.
-* Primero van a empezar a jugar el jugador de las damas azules. Después de un movimiento correcto se va a cambiar el turno al jugador contrario.
-* Si un jugador mata una ficha contraria, tiene otro turno.
+* Primero van a empezar a jugar las damas azules. 
+* Después de un movimiento correcto se va a cambiar el turno al jugador contrario.
+* Si un jugador mata una ficha contraria se le va a otorgar otro turno.
 ## Colores
 Los colores deberian funcionar por defecto. Windows puede que se queje (Windows es raro).
 ## Comandos para hacer tests
-Existe un modo (secreto) llamado modo DIOS el cual te permite mover cualquier ficha obviando las reglas. Además, también puedes eliminar damas o promoverlas a reinas.
+Existe un modo "secreto" llamado modo DIOS el cual te permite mover cualquier ficha obviando las reglas. Además, también puedes eliminar damas o promoverlas a reinas.
 
 Puedes entrar en modo DIOS con el comando `/mododios`.
+
 <b>Comandos:</b>
 * `<origen:destino>`: Mover desde la coordenada de origen a la coordenada de destino obviando las reglas.
 * `/reina <coordenada>`: Promover dama a reina.
