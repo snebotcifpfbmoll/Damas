@@ -6,13 +6,13 @@ El mejor juego de damas del puto UNIVERSO.
 * Descargar el proyecto
 * Ejecutar el archivo `game.py`
 * Disfrutar
-## Conocimientos previos (leer antes de jugar)
+## Datos importantes
 * Leerse las normas (opción 1 en el menu principal).
 * Primero van a empezar a jugar las damas azules. 
 * Después de un movimiento correcto se va a cambiar el turno al jugador contrario.
 * Si un jugador mata a una ficha contraria se le va a otorgar otro turno.
 ## Colores
-Se usa ANSI colors para dar color al juago. No se requiere instalar ningún plugin.
+Usa ANSI colors para dar color al juego. No se requiere instalar ningún plugin.
 ## Comandos para hacer tests
 Existe un modo "secreto" llamado modo DIOS el cual te permite mover cualquier ficha obviando las reglas. Además, también puedes eliminar damas o promoverlas a reinas.
 
