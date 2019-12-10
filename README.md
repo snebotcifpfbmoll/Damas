@@ -12,7 +12,7 @@ El mejor juego de damas del puto UNIVERSO.
 * Después de un movimiento correcto se va a cambiar el turno al jugador contrario.
 * Si un jugador mata a una ficha contraria se le va a otorgar otro turno.
 ## Colores
-Los colores deberian funcionar por defecto. Windows puede que se queje (Windows es raro).
+Se usa ANSI colors para dar color al juago. No se requiere instalar ningún plugin.
 ## Comandos para hacer tests
 Existe un modo "secreto" llamado modo DIOS el cual te permite mover cualquier ficha obviando las reglas. Además, también puedes eliminar damas o promoverlas a reinas.
 
